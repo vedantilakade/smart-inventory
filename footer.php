@@ -3,7 +3,7 @@
     <div class="d-sm-flex justify-content-center font-weight-bold">
         <span
             class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
-            >Made with 💖 by FY-MCA 1st Group Mini Project
+            >Mini Project <icon class="fa fa-code"></icon> Made with 💖 by Smart Inventory Group 
         </span>
     </div>
 </footer>

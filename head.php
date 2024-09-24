@@ -1,3 +1,10 @@
+<?php 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$con = mysqli_connect("localhost", "root", "", "smart_inventory_db");
+?>
+
     <!-- plugins:css -->
     <link
       rel="stylesheet"
@@ -28,4 +35,4 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css" />
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="assets/images/smart-inventory.png" />

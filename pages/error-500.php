@@ -33,7 +33,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="/smart-inventory/assets/css/style.css" />
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="/smart-inventory/assets/images/favicon.png" />
+    <link rel="shortcut icon" href="/smart-inventory/assets/images/smart-inventory.png" />
   </head>
   <body>
   <div class="container-scroller">
@@ -56,7 +56,7 @@
                 <div class="col-12 text-center mt-xl-2">
                   <a
                     class="text-white font-weight-medium"
-                    href="../../index.html"
+                    href="/smart-inventory/index.php"
                     >Back to home</a
                   >
                 </div>
