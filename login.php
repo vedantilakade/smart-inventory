@@ -1,4 +1,5 @@
 <?php include 'head.php'; ?>
+
 <?php
 // Check if the login form is submitted
 if (isset($_POST['login'])) {
@@ -7,7 +8,7 @@ if (isset($_POST['login'])) {
     $password = mysqli_real_escape_string($con, $_POST['password']);
 
     // Query to check if the user exists in the database
-    $query = "SELECT * FROM users WHERE email='$email'";
+    $query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
     $result = mysqli_query($con, $query);
 
     if (mysqli_num_rows($result) > 0) {
@@ -15,7 +16,11 @@ if (isset($_POST['login'])) {
 
         // Verify the password
         if (password_verify($password, $user['password'])) {
-            // Start the session and store user info
+            // Start the session and regenerate session ID
+            session_start();
+            session_regenerate_id(true);
+
+            // Store user info in the session
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
             $_SESSION['loggedin'] = true; // Add this to track logged-in status
@@ -37,7 +42,6 @@ if (isset($_POST['login'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Smart Inventory</title>
@@ -52,7 +56,6 @@ if (isset($_POST['login'])) {
                         <h4 class="font-weight-bold">Login</h4>
                         <h6 class="font-weight-light">Sign in to continue..</h6>
 
-                        <!-- Login Form -->
                         <form class="pt-3" method="POST" action="">
                             <div class="form-group">
                                 <input
@@ -95,9 +98,7 @@ if (isset($_POST['login'])) {
                 </div>
             </div>
         </div>
-        <!-- content-wrapper ends -->
     </div>
-    <!-- page-body-wrapper ends -->
 </div>
 </body>
 </html>

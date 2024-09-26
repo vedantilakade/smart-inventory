@@ -1,38 +1,24 @@
 <?php 
 if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
+
 $con = mysqli_connect("localhost", "root", "", "smart_inventory_db");
+if (mysqli_connect_errno()) {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  exit();
+}
 ?>
 
-    <!-- plugins:css -->
-    <link
-      rel="stylesheet"
-      href="assets/vendors/mdi/css/materialdesignicons.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="assets/vendors/ti-icons/css/themify-icons.css"
-    />
-    <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css" />
-    <link
-      rel="stylesheet"
-      href="assets/vendors/font-awesome/css/font-awesome.min.css"
-    />
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link
-      rel="stylesheet"
-      href="assets/vendors/font-awesome/css/font-awesome.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css"
-    />
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/smart-inventory.png" />
+<link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css" />
+<link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css" />
+<link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css" />
+<link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css" />
+
+
+<link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+
+<link rel="stylesheet" href="assets/css/style.css" />
+
+<link rel="shortcut icon" href="assets/images/smart-inventory.png" />
