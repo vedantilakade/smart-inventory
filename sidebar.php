@@ -52,6 +52,9 @@
           <li class="nav-item">
             <a class="nav-link" href="pages/error-500.php"> 500 </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/no_access.php"> 403 </a>
+          </li>
         </ul>
       </div>
     </li>

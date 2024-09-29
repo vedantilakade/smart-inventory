@@ -5,4 +5,22 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
     exit;
 }
+
+// Debugging: Check if the session role is set correctly
+if (!isset($_SESSION['role'])) {
+    echo "Role is not set!";
+    exit;
+}
+
+// List of pages that only Admins or Managers should access
+$restricted_pages = ['add_item.php', 'edit_item.php', 'delete_item.php'];
+
+// Get the current script name
+$current_page = basename($_SERVER['PHP_SELF']);
+
+// If the user is on a restricted page and their role is not Admin or Manager, redirect them to no_access.php
+if (in_array($current_page, $restricted_pages) && $_SESSION['role'] !== 'Admin' && $_SESSION['role'] !== 'Manager') {
+    header("Location: pages/no_access.php");
+    exit;
+}
 ?>

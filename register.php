@@ -10,11 +10,12 @@
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // Get form data
+  // Get form data and inputs
   $username = mysqli_real_escape_string($con, $_POST['username']);
   $email = mysqli_real_escape_string($con, $_POST['email']);
   $password = mysqli_real_escape_string($con, $_POST['password']);
   $confirmPassword = mysqli_real_escape_string($con, $_POST['confirmPassword']);
+  $role = mysqli_real_escape_string($con, $_POST['role']);
 
   // Validate the email format
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -28,12 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Check if the username or email already exists
-    $checkUser = mysqli_query($con, "SELECT * FROM users WHERE username = '$username' OR email = '$email'");
+    $checkUser = mysqli_query($con, "SELECT * FROM User WHERE username = '$username' OR email = '$email'");
     if (mysqli_num_rows($checkUser) > 0) {
       echo "<script>alert('Username or Email already exists!');</script>";
     } else {
       // Insert the user into the database
-      $query = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashedPassword')";
+      $query = "INSERT INTO User (Username, Email, Password, Role) VALUES ('$username', '$email', '$hashedPassword', '$role')";
       if (mysqli_query($con, $query)) {
         echo "<script>alert('Registration successful!'); window.location.href = 'login.php';</script>";
       } else {
@@ -55,6 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               Signing up is easy. It only takes a few steps.
             </h6>
             <form class="pt-3" method="POST" action="">
+              <div class="form-group">
+                <select name="role" class="form-control mb-2" required>
+                  <option value="Admin">Admin</option>
+                  <option value="Manager">Manager</option>
+                  <option value="Employee">Employee</option>
+                </select>
+              </div>
               <div class="form-group">
                 <input type="text" class="form-control form-control-lg" id="username" name="username"
                      placeholder="Username" required/>

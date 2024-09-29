@@ -11,33 +11,26 @@
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
       <span class="mdi mdi-menu"></span>
     </button>
-    <div class="search-field d-none d-md-block">
-      <form id="inventorySearchForm" class="d-flex align-items-center h-100" method="GET" action="inventory.php">
-        <div class="input-group">
-          <div class="input-group-prepend bg-transparent">
-            <i class="input-group-text border-0 mdi mdi-magnify"></i>
+
+    <!-- Show the search bar on inventory.php -->
+    <?php if (basename($_SERVER['PHP_SELF']) === 'inventory.php'): ?>
+      <div class="search-field d-none d-md-block">
+        <form id="inventorySearchForm" class="d-flex align-items-center h-100" method="GET" action="inventory.php">
+          <div class="input-group">
+            <div class="input-group-prepend bg-transparent">
+              <i class="input-group-text border-0 mdi mdi-magnify"></i>
+            </div>
+            <input type="text" id="inventorySearch" name="search" class="form-control bg-transparent border-0" placeholder="Search Inventory" />
           </div>
-          <input type="text" id="inventorySearch" name="search" class="form-control bg-transparent border-0" placeholder="Search Inventory" />
-        </div>
-      </form>
-      <script>
-        document.getElementById('inventorySearch').addEventListener('keypress', function (e) {
-          // Check if the 'Enter' key is pressed
-          if (e.key === 'Enter') {
-            e.preventDefault();  // Prevent the default form submission behavior
-            
-            // Check if the current page is inventory.php
-            if (window.location.pathname.includes('inventory.php')) {
-              document.getElementById('inventorySearchForm').submit(); // Submit the search form
-            } else {
-              alert('You can only search inventory items while on the Inventory Management page.');
-            }
-          }
-        });
-      </script>
-    </div>
+        </form>
+      </div>
+    <?php endif; ?>
+
     <ul class="navbar-nav navbar-nav-right d-none d-lg-flex">
       <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+        <li class="nav-item text-info">
+          <span class="nav-link">Logged in as <?php echo htmlspecialchars($_SESSION['role']); ?></span>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="logout.php">
             <button class="btn btn-danger" style="margin-right: -30px;">Logout</button>
@@ -45,6 +38,7 @@
         </li>
       <?php endif; ?>
     </ul>
+
     <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
       <span class="mdi mdi-menu"></span>
     </button>

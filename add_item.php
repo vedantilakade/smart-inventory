@@ -1,3 +1,5 @@
+<?php include 'auth.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,8 +27,12 @@
             <h2 class="mt-4">Add New Inventory Item</h2>
             <form action="add_item.php" method="POST">
               <div class="form-group mt-2">
-                <label for="name">Item Name</label>
-                <input type="text" name="name" id="name" class="form-control" required>
+                <label for="itemName">Item Name</label>
+                <input type="text" name="itemName" id="itemName" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="category">Category</label>
+                <input type="text" name="category" id="category" class="form-control" required>
               </div>
               <div class="form-group">
                 <label for="quantity">Quantity</label>
@@ -36,21 +42,43 @@
                 <label for="location">Location</label>
                 <input type="text" name="location" id="location" class="form-control" required>
               </div>
+              <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" step="0.01" name="price" id="price" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="supplierID">Supplier ID</label>
+                <input type="number" name="supplierID" id="supplierID" class="form-control">
+              </div>
               <button type="submit" class="btn btn-primary mt-3">Add Item</button>
             </form>
           </div>
           <?php
           if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $name = mysqli_real_escape_string($con, $_POST['name']);
+            $itemName = mysqli_real_escape_string($con, $_POST['itemName']);
+            $category = mysqli_real_escape_string($con, $_POST['category']);
             $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
             $location = mysqli_real_escape_string($con, $_POST['location']);
+            $price = mysqli_real_escape_string($con, $_POST['price']);
+            $supplierID = mysqli_real_escape_string($con, $_POST['supplierID']);
             $last_updated = date('Y-m-d H:i:s');
 
-            $query = "INSERT INTO inventory (name, quantity, location, last_updated) VALUES ('$name', '$quantity', '$location', '$last_updated')";
-            if (mysqli_query($con, $query)) {
-              echo "<script>alert('Item added successfully!'); window.location.href = 'inventory.php';</script>";
+            // Check if SupplierID exists
+            $supplierCheckQuery = "SELECT SupplierID FROM supplier WHERE SupplierID = '$supplierID'";
+            $supplierCheckResult = mysqli_query($con, $supplierCheckQuery);
+
+            if (mysqli_num_rows($supplierCheckResult) > 0) {
+              // SupplierID exists, proceed with insertion
+              $query = "INSERT INTO InventoryItem (ItemName, Category, Quantity, Location, Price, SupplierID, UpdatedAt) VALUES ('$itemName', '$category', '$quantity', '$location', '$price', '$supplierID', '$last_updated')";
+              
+              if (mysqli_query($con, $query)) {
+                echo "<script>alert('Item added successfully!'); window.location.href = 'inventory.php';</script>";
+              } else {
+                echo "<script>alert('Error adding item: " . mysqli_error($con) . "');</script>";
+              }
             } else {
-              echo "<script>alert('Error adding item.');</script>";
+              // SupplierID does not exist, show error message
+              echo "<script>alert('Error: Supplier ID does not exist.');</script>";
             }
           }
           ?>

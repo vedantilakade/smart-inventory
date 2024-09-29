@@ -1,31 +1,30 @@
 <?php include 'head.php'; ?>
 
 <?php
-// Check if the login form is submitted
 if (isset($_POST['login'])) {
-    // Get the form data and sanitize inputs
+    // Get the form data and inputs
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
 
     // Query to check if the user exists in the database
-    $query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
+    $query = "SELECT * FROM User WHERE Email='$email' LIMIT 1";
     $result = mysqli_query($con, $query);
 
     if (mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
 
-        // Verify the password
-        if (password_verify($password, $user['password'])) {
-            // Start the session and regenerate session ID
+        // Verify the password Start the session and regenerate session ID
+        if (password_verify($password, $user['Password'])) {
             session_start();
             session_regenerate_id(true);
 
             // Store user info in the session
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['loggedin'] = true; // Add this to track logged-in status
+            $_SESSION['username'] = $user['Username'];
+            $_SESSION['email'] = $user['Email'];
+            $_SESSION['role'] = $user['Role'];
+            $_SESSION['loggedin'] = true;
 
-            // Redirect to the dashboard or homepage
+            // Redirect to the dashboard
             header("Location: index.php");
             exit();
         } else {
