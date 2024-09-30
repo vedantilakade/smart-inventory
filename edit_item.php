@@ -28,7 +28,7 @@ $item = mysqli_fetch_assoc($result);
             <span class="page-title-icon bg-gradient-primary text-white me-2">
               <i class="mdi mdi-view-list menu-icon"></i>
             </span>
-            Inventory Management
+            Smart Inventory Management
           </h3>
         </div>
         <div class="container">
