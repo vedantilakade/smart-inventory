@@ -55,6 +55,9 @@
           <li class="nav-item">
             <a class="nav-link" href="pages/no_access.php"> 403 </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="admin_manage_roles.php"> Roles </a>
+          </li>
         </ul>
       </div>
     </li>

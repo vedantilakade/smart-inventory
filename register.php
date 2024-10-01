@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-  <title>Smart Inventory</title>
+  <title>Smart Inventory Register</title>
   <?php include 'head.php'; ?>
 </head>
 <body>
@@ -15,7 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $email = mysqli_real_escape_string($con, $_POST['email']);
   $password = mysqli_real_escape_string($con, $_POST['password']);
   $confirmPassword = mysqli_real_escape_string($con, $_POST['confirmPassword']);
-  $role = mysqli_real_escape_string($con, $_POST['role']);
+  
+  // By default, set role as 'Employee'
+  $role = 'Employee';
 
   // Validate the email format
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -33,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_num_rows($checkUser) > 0) {
       echo "<script>alert('Username or Email already exists!');</script>";
     } else {
-      // Insert the user into the database
+      // Insert the user into the database with default role as 'Employee'
       $query = "INSERT INTO User (Username, Email, Password, Role) VALUES ('$username', '$email', '$hashedPassword', '$role')";
       if (mysqli_query($con, $query)) {
         echo "<script>alert('Registration successful!'); window.location.href = 'login.php';</script>";
@@ -56,13 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               Signing up is easy. It only takes a few steps.
             </h6>
             <form class="pt-3" method="POST" action="">
-              <div class="form-group">
-                <select name="role" class="form-control mb-2" required>
-                  <option value="Admin">Admin</option>
-                  <option value="Manager">Manager</option>
-                  <option value="Employee">Employee</option>
-                </select>
-              </div>
               <div class="form-group">
                 <input type="text" class="form-control form-control-lg" id="username" name="username"
                      placeholder="Username" required/>
