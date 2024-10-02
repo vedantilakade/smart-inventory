@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2024 at 01:41 PM
+-- Generation Time: Oct 02, 2024 at 06:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,6 +35,13 @@ CREATE TABLE `activity_log` (
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `activity_log`
+--
+
+INSERT INTO `activity_log` (`log_id`, `user_id`, `action`, `performed_by`, `timestamp`) VALUES
+(8, 2, 'Promoted to Manager', 1, '2024-10-02 14:43:37');
+
 -- --------------------------------------------------------
 
 --
@@ -58,13 +65,13 @@ CREATE TABLE `inventoryitem` (
 --
 
 INSERT INTO `inventoryitem` (`ItemID`, `ItemName`, `Category`, `Quantity`, `Location`, `Price`, `SupplierID`, `CreatedAt`, `UpdatedAt`) VALUES
-(15, 'Wireless Mouse', 'Electronics', 50, 'Warehouse A', 799.00, 1, '2024-10-01 11:37:28', '2024-10-01 08:08:14'),
-(16, 'Mechanical Keyboard', 'Electronics', 30, 'Warehouse B', 1499.00, 2, '2024-10-01 11:37:28', '2024-10-01 08:08:28'),
-(17, 'Office Chair', 'Furniture', 20, 'Showroom', 499.00, 3, '2024-10-01 11:37:28', '2024-10-01 08:08:36'),
-(18, 'USB-C Cable', 'Accessories', 100, 'Warehouse A', 299.00, 1, '2024-10-01 11:37:28', '2024-10-01 08:08:44'),
-(19, 'Notebook', 'Stationery', 150, 'Stationery Section', 49.00, 3, '2024-10-01 11:37:28', '2024-10-01 08:08:51'),
-(20, 'Pen', 'Stationery', 300, 'Stationery Section', 35.00, 1, '2024-10-01 11:37:28', '2024-10-01 08:09:03'),
-(21, 'HDMI Cable', 'Accessories', 80, 'Warehouse C', 99.00, 2, '2024-10-01 11:37:28', '2024-10-01 08:09:12');
+(30, 'Laptop ABC 15\"', 'Computers', 200, 'Section C, Rack 1', 45999.00, 29, '2024-10-02 16:33:02', '2024-10-02 13:03:02'),
+(31, 'Air Conditioner 1.5 Ton', 'Home Appliances', 500, 'Section D, Rack 5', 31999.00, 30, '2024-10-02 16:33:54', '2024-10-02 13:03:54'),
+(32, 'Bluetooth Speaker Z100', 'Audio', 80, 'Section E, Shelf 4', 1999.00, 31, '2024-10-02 16:34:34', '2024-10-02 13:04:34'),
+(33, 'Microwave Oven 20L', 'Kitchen Appliances', 300, 'Section F, Shelf 2', 6999.00, 32, '2024-10-02 16:35:46', '2024-10-02 13:05:46'),
+(34, 'Refrigerator 300L', 'Home Appliances', 30, 'Section G, Rack 1', 27999.00, 27, '2024-10-02 16:36:32', '2024-10-02 13:06:32'),
+(35, 'Smartphone XYZ Pro', 'Mobile Phones', 200, 'Section B, Shelf 3', 19999.00, 28, '2024-10-02 16:37:50', '2024-10-02 13:07:50'),
+(36, 'LED TV 42 inch', 'Television', 100, 'Section A, Rack 2', 29999.00, 27, '2024-10-02 16:38:44', '2024-10-02 13:08:44');
 
 -- --------------------------------------------------------
 
@@ -146,17 +153,48 @@ CREATE TABLE `supplier` (
   `ContactPhone` varchar(20) DEFAULT NULL,
   `Address` text DEFAULT NULL,
   `CreatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `UpdatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `UpdatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_deleted` tinyint(4) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`SupplierID`, `SupplierName`, `ContactPerson`, `ContactEmail`, `ContactPhone`, `Address`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 'Nitin Govardhane', 'Nitin Govardhane', 'nitin.govardhane@gmail.com', '1234567890', 'Nashik', '2024-10-01 11:28:41', '2024-10-01 11:28:41'),
-(2, 'Jitesh Borse', 'Jitesh Borse', 'jitesh.borse@gmail.com', '0987654321', 'Pune', '2024-10-01 11:28:41', '2024-10-01 11:28:41'),
-(3, 'Vedanti Lakade', 'Vedanti Lakade', 'vedanti.lakade@gmail.com', '1122334455', 'Mumbai', '2024-10-01 11:28:41', '2024-10-01 11:28:41');
+INSERT INTO `supplier` (`SupplierID`, `SupplierName`, `ContactPerson`, `ContactEmail`, `ContactPhone`, `Address`, `CreatedAt`, `UpdatedAt`, `is_deleted`) VALUES
+(27, 'Bharat Electronics', 'Rajesh Kumar', 'rajesh.kumar@bharatelectronics.com', '9876543210', 'No. 12, MG Road, Bengaluru, Karnataka', '2024-10-02 16:22:34', '2024-10-02 16:22:34', 0),
+(28, 'Tata Electricals', 'Amit Desai', 'amit.desai@tataelectricals.in', '9823123456', 'Plot 5, MIDC, Pune, Maharashtra', '2024-10-02 16:23:07', '2024-10-02 16:23:07', 0),
+(29, 'Reliance Electronics', 'Anjali Mehta', 'anjali.mehta@relianceelectronics.com', '9967123456', 'Ghatkopar West, Mumbai, Maharashtra', '2024-10-02 16:23:52', '2024-10-02 16:23:52', 0),
+(30, 'L&T Tech Supplies', 'Suresh Nair', 'suresh.nair@lttech.in', '9845123456', 'Sector 21, Gurgaon, Haryana', '2024-10-02 16:24:44', '2024-10-02 16:24:44', 0),
+(31, 'Havells India', 'Vikram Singh', 'vikram.singh@havellsindia.in', '9911223344', 'DLF Cyber City, Hyderabad, Telangana', '2024-10-02 16:25:53', '2024-10-02 16:25:53', 0),
+(32, 'Godrej Electricals', 'Pooja Sharma', 'pooja.sharma@godrejelectricals.in', '9988776655', 'Churchgate, Mumbai, Maharashtra', '2024-10-02 16:26:37', '2024-10-02 16:26:37', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier_activity_log`
+--
+
+CREATE TABLE `supplier_activity_log` (
+  `log_id` int(11) NOT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `action` varchar(255) DEFAULT NULL,
+  `performed_by` int(11) DEFAULT NULL,
+  `role` varchar(50) DEFAULT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supplier_activity_log`
+--
+
+INSERT INTO `supplier_activity_log` (`log_id`, `supplier_id`, `action`, `performed_by`, `role`, `timestamp`) VALUES
+(31, 27, 'Added', 1, 'Admin', '2024-10-02 16:22:35'),
+(32, 28, 'Added', 1, 'Admin', '2024-10-02 16:23:07'),
+(33, 29, 'Added', 1, 'Admin', '2024-10-02 16:23:53'),
+(34, 30, 'Added', 1, 'Admin', '2024-10-02 16:24:44'),
+(35, 31, 'Added', 1, 'Manager', '2024-10-02 16:25:54'),
+(36, 32, 'Added', 1, 'Manager', '2024-10-02 16:26:38');
 
 -- --------------------------------------------------------
 
@@ -182,9 +220,9 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`UserID`, `Username`, `Password`, `Email`, `Role`, `CreatedAt`, `UpdatedAt`, `role_assigned_by`, `role_assigned_at`) VALUES
 (1, 'Admin', '$2y$10$9I/Dj22uuAYYh9FL4/s.COnzrqIYE7MCsHLhlF9sjWKJorOBYU2w6', 'admin@gmail.com', 'Admin', '2024-10-01 11:24:52', '2024-10-01 11:24:52', NULL, NULL),
-(2, 'Vedanti', '$2y$10$qJCwTG3nMWZx2fAlPxTyFeaexj6evMdat//Iot1eLozncrnTNvwLq', 'vedanti@gmail.com', 'Employee', '2024-10-01 11:25:35', '2024-10-01 11:25:35', NULL, NULL),
-(3, 'Jitesh', '$2y$10$MSfnKdiWdPYzrl2A2ZWiMO9baRq5kqqQvdqZBAIhgM0VOfV2XssHi', 'jitesh@gmail.com', 'Employee', '2024-10-01 11:25:52', '2024-10-01 11:25:52', NULL, NULL),
-(4, 'Shalaka', '$2y$10$6DzydezrEJD0P.iRPbFYVuID1DMtagES1IgKOFCjxEnT/79oMs6NO', 'shalaka@gmail.com', 'Employee', '2024-10-01 11:26:12', '2024-10-01 11:26:12', NULL, NULL);
+(2, 'Vedanti', '$2y$10$qJCwTG3nMWZx2fAlPxTyFeaexj6evMdat//Iot1eLozncrnTNvwLq', 'vedanti@gmail.com', 'Manager', '2024-10-01 11:25:35', '2024-10-02 14:43:37', 1, '2024-10-02 14:43:37'),
+(3, 'Jitesh', '$2y$10$MSfnKdiWdPYzrl2A2ZWiMO9baRq5kqqQvdqZBAIhgM0VOfV2XssHi', 'jitesh@gmail.com', 'Employee', '2024-10-01 11:25:52', '2024-10-02 11:14:58', 1, '2024-10-02 11:14:58'),
+(4, 'Shalaka', '$2y$10$6DzydezrEJD0P.iRPbFYVuID1DMtagES1IgKOFCjxEnT/79oMs6NO', 'shalaka@gmail.com', 'Employee', '2024-10-01 11:26:12', '2024-10-02 13:46:17', 1, '2024-10-02 13:46:17');
 
 --
 -- Indexes for dumped tables
@@ -201,7 +239,7 @@ ALTER TABLE `activity_log`
 --
 ALTER TABLE `inventoryitem`
   ADD PRIMARY KEY (`ItemID`),
-  ADD KEY `SupplierID` (`SupplierID`);
+  ADD KEY `inventoryitem_ibfk_1` (`SupplierID`);
 
 --
 -- Indexes for table `prediction`
@@ -239,6 +277,14 @@ ALTER TABLE `supplier`
   ADD PRIMARY KEY (`SupplierID`);
 
 --
+-- Indexes for table `supplier_activity_log`
+--
+ALTER TABLE `supplier_activity_log`
+  ADD PRIMARY KEY (`log_id`),
+  ADD KEY `performed_by` (`performed_by`),
+  ADD KEY `supplier_activity_log_ibfk_1` (`supplier_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -253,13 +299,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `inventoryitem`
 --
 ALTER TABLE `inventoryitem`
-  MODIFY `ItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `ItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `prediction`
@@ -289,7 +335,13 @@ ALTER TABLE `salestransaction`
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `SupplierID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `SupplierID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `supplier_activity_log`
+--
+ALTER TABLE `supplier_activity_log`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -305,7 +357,7 @@ ALTER TABLE `user`
 -- Constraints for table `inventoryitem`
 --
 ALTER TABLE `inventoryitem`
-  ADD CONSTRAINT `inventoryitem_ibfk_1` FOREIGN KEY (`SupplierID`) REFERENCES `supplier` (`SupplierID`);
+  ADD CONSTRAINT `inventoryitem_ibfk_1` FOREIGN KEY (`SupplierID`) REFERENCES `supplier` (`SupplierID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `prediction`
@@ -331,6 +383,13 @@ ALTER TABLE `restockalert`
 ALTER TABLE `salestransaction`
   ADD CONSTRAINT `salestransaction_ibfk_1` FOREIGN KEY (`ItemID`) REFERENCES `inventoryitem` (`ItemID`),
   ADD CONSTRAINT `salestransaction_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
+
+--
+-- Constraints for table `supplier_activity_log`
+--
+ALTER TABLE `supplier_activity_log`
+  ADD CONSTRAINT `supplier_activity_log_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`SupplierID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `supplier_activity_log_ibfk_2` FOREIGN KEY (`performed_by`) REFERENCES `user` (`UserID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
