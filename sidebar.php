@@ -28,9 +28,21 @@
       </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="admin_manage_roles.php">
+        <span class="menu-title">Roles</span>
+        <i class="mdi mdi-account-multiple menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="inventory.php">
         <span class="menu-title">Inventory</span>
         <i class="mdi mdi-view-list menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="supplier.php">
+        <span class="menu-title">Suppliers</span>
+        <i class="mdi mdi-truck menu-icon"></i>
       </a>
     </li>
     <li class="nav-item">

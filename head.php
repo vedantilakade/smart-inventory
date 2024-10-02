@@ -10,6 +10,7 @@ if (mysqli_connect_errno()) {
 }
 ?>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css" />
 <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css" />
 <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css" />
