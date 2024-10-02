@@ -2,10 +2,13 @@
 include 'head.php'; 
 
 // Check if the logged-in user is admin
-if ($_SESSION['role'] !== 'Admin') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
     header('Location: pages/no_access.php');
     exit();
 }
+
+// Set the admin ID to 1 by default
+$adminId = 1;
 
 // Handle promotion, demotion, and user removal
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,6 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $logStmt->bind_param('ii', $userId, $adminId);
             $logStmt->execute();
             echo "<script>alert('User promoted to Manager');</script>";
+        } else {
+            echo "<script>alert('Error promoting user: " . $stmt->error . "');</script>";
         }
     } elseif ($action === 'demote') {
         // Demote user to Employee
@@ -37,6 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $logStmt->bind_param('ii', $userId, $adminId);
             $logStmt->execute();
             echo "<script>alert('User demoted to Employee');</script>";
+        } else {
+            echo "<script>alert('Error demoting user: " . $stmt->error . "');</script>";
         }
     } elseif ($action === 'remove') {
         // Remove user
@@ -50,6 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $logStmt->bind_param('ii', $userId, $adminId);
             $logStmt->execute();
             echo "<script>alert('User removed successfully');</script>";
+        } else {
+            echo "<script>alert('Error removing user: " . $stmt->error . "');</script>";
         }
     }
 }
@@ -77,7 +86,7 @@ $usersResult = mysqli_query($con, $usersQuery);
                     <div class="page-header">
                         <h3 class="page-title">
                             <span class="page-title-icon bg-gradient-primary text-white me-2">
-                            <i class="mdi mdi-account-cog menu-icon"></i>
+                                <i class="mdi mdi-account-cog menu-icon"></i>
                             </span>
                             Manage Users
                         </h3>
@@ -132,21 +141,25 @@ $usersResult = mysqli_query($con, $usersQuery);
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>User ID</th>
+                                    <th>Username</th> 
                                     <th>Action</th>
-                                    <th>Performed By (Admin ID)</th>
+                                    <th>Performed By</th>
                                     <th>Timestamp</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $logQuery = "SELECT * FROM activity_log ORDER BY timestamp DESC";
+                                $logQuery = "
+                                    SELECT activity_log.*, User.Username 
+                                    FROM activity_log 
+                                    INNER JOIN User ON activity_log.user_id = User.UserID 
+                                    ORDER BY timestamp DESC";
                                 $logResult = mysqli_query($con, $logQuery);
                                 while ($log = mysqli_fetch_assoc($logResult)): ?>
                                     <tr>
-                                        <td><?php echo $log['user_id']; ?></td>
+                                        <td><?php echo $log['Username']; ?></td>
                                         <td><?php echo $log['action']; ?></td>
-                                        <td><?php echo $log['performed_by']; ?></td>
+                                        <td>Admin</td>
                                         <td><?php echo $log['timestamp']; ?></td>
                                     </tr>
                                 <?php endwhile; ?>
